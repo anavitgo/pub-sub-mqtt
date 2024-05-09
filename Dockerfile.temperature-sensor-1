@@ -1,0 +1,6 @@
+FROM alpine:latest
+RUN apk add --no-cache python3 py3-paho-mqtt
+COPY src/temperature-sensor-1.py /src/temperature-sensor-1.py
+RUN apk add --no-cache && \
+    echo "* * * * * /usr/bin/python3 /src/temperature-sensor-1.py >> /var/log/syslog 2>&1" > /etc/crontabs/root
+CMD ["tail", "-f", "/dev/null"]
